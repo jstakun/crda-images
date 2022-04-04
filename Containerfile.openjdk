@@ -1,0 +1,29 @@
+FROM registry.redhat.io/openjdk/openjdk-11-rhel7
+#FROM registry.redhat.io/ubi8/openjdk-11
+LABEL org.opencontainers.image.source https://github.com/fabric8-analytics/crda-images
+
+user root
+
+#RUN /opt/rh/rh-maven36/root/usr/bin/mvn -version
+
+RUN rpm -i https://github.com/fabric8-analytics/cli-tools/releases/download/v0.2.5/crda_0.2.5_Linux-64bit.rpm 
+
+RUN rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm 
+
+RUN yum install jq wget -y && yum clean all
+
+RUN ln -s /opt/rh/rh-maven36/root/usr/bin/mvn /usr/local/bin/mvn
+
+#ENV PATH="/opt/rh/rh-maven36/root/usr/bin/mvn:${PATH}"
+#ENV MAVEN_OPTS="-Xmx1024M -Xss128M -XX:MetaspaceSize=512M -XX:MaxMetaspaceSize=1024M -XX:+CMSClassUnloadingEnabled"
+ENV AUTH_TOKEN=''
+ENV CRDA_KEY=''
+ENV HOST=''
+ENV CONSENT_TELEMETRY='false'
+
+#USER jboss
+
+#RUN mvn --version
+
+COPY ./scripts/python/crda.sh /
+RUN chmod +x /crda.sh
