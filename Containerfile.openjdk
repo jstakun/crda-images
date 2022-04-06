@@ -7,12 +7,11 @@ USER root
 
 RUN rpm -i https://github.com/fabric8-analytics/cli-tools/releases/download/v0.2.5/crda_0.2.5_Linux-64bit.rpm
     
-RUN wget -O /tmp/mvn.tar.gz http://apache.mirror.anlx.net/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+RUN wget -O /tmp/mvn.tar.gz http://apache.mirror.anlx.net/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz
 
-RUN tar -xzf /tmp/mvn.tar.gz && rm -rf /tmp/mvn.tar.gz && mkdir /usr/local/maven && mv apache-maven-3.6.3/ /usr/local/maven/ && alternatives --install /usr/bin/mvn mvn /usr/local/maven/apache-maven-3.6.3/bin/mvn 1
+RUN tar -xzf /tmp/mvn.tar.gz && rm -rf /tmp/mvn.tar.gz && mkdir /usr/local/maven && mv apache-maven-3.8.5/ /usr/local/maven/ && alternatives --install /usr/bin/mvn mvn /usr/local/maven/apache-maven-3.8.5/bin/mvn 1
 
-ENV PATH="/usr/local/maven/apache-maven-3.6.3/bin:${PATH}" \
-    MAVEN_OPTS="-Xmx1024M -Xss128M -XX:MetaspaceSize=512M -XX:MaxMetaspaceSize=1024M -XX:+CMSClassUnloadingEnabled" \
+ENV MAVEN_OPTS="-Xmx1024M -Xss128M -XX:MetaspaceSize=512M -XX:MaxMetaspaceSize=1024M -XX:+CMSClassUnloadingEnabled" \
     AUTH_TOKEN='' \ 
     CRDA_KEY='' \
     HOST='' \
