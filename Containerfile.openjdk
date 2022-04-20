@@ -1,7 +1,7 @@
 FROM registry.access.redhat.com/ubi8/ubi
 MAINTAINER Jaroslaw Stakun jstakun@redhat.com
 RUN rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-RUN yum install -y java-11-openjdk wget jq --setopt install_weak_deps=false --nodocs; yum clean all && rm -rf /mnt/rootfs/var/cache/
+RUN yum install -y java-11-openjdk wget jq --setopt install_weak_deps=false --nodocs; yum -y update; yum clean all && rm -rf /mnt/rootfs/var/cache/
 
 USER root
 
