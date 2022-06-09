@@ -1,5 +1,5 @@
 VERSION_MAJOR=11
-VERSION_MINOR=11-6
+VERSION_MINOR=11-7
 
 podman login quay.io
 

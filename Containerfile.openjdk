@@ -1,15 +1,16 @@
 FROM registry.access.redhat.com/ubi8/ubi
 MAINTAINER Jaroslaw Stakun jstakun@redhat.com
-RUN rpm -i https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-RUN yum install -y java-11-openjdk wget jq --setopt install_weak_deps=false --nodocs; yum -y update; yum clean all && rm -rf /mnt/rootfs/var/cache/
+
+RUN rpm -iv https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
+    yum install -y java-11-openjdk wget jq --setopt install_weak_deps=false --nodocs; yum -y update; yum clean all && rm -rf /mnt/rootfs/var/cache/
 
 USER root
 
-RUN rpm -i https://github.com/fabric8-analytics/cli-tools/releases/download/v0.2.5/crda_0.2.5_Linux-64bit.rpm
-    
-RUN wget -O /tmp/mvn.tar.gz http://apache.mirror.anlx.net/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz
 
-RUN tar -xzf /tmp/mvn.tar.gz && rm -rf /tmp/mvn.tar.gz && mkdir /usr/local/maven && mv apache-maven-3.8.5/ /usr/local/maven/ && alternatives --install /usr/bin/mvn mvn /usr/local/maven/apache-maven-3.8.5/bin/mvn 1
+RUN rpm -iv https://github.com/fabric8-analytics/cli-tools/releases/download/v0.2.5/crda_0.2.5_Linux-64bit.rpm && \
+    wget -O /tmp/mvn.tar.gz http://apache.mirror.anlx.net/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz && \
+    tar -xvzf /tmp/mvn.tar.gz && rm -rf /tmp/mvn.tar.gz && mkdir /usr/local/maven && \
+    mv apache-maven-3.8.5/ /usr/local/maven/ && alternatives --install /usr/bin/mvn mvn /usr/local/maven/apache-maven-3.8.5/bin/mvn 1
 
 ENV MAVEN_OPTS="-Xmx1024M -Xss128M -XX:MetaspaceSize=512M -XX:MaxMetaspaceSize=1024M -XX:+CMSClassUnloadingEnabled" \
     AUTH_TOKEN='' \ 
