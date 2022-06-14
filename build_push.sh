@@ -15,5 +15,5 @@ then
   podman push quay.io/jstakun/crda-openjdk:$VERSION_MINOR
   podman push quay.io/jstakun/crda-openjdk:$VERSION_MAJOR
 else
-  echo "Skipped pushing due to error"
+  echo "Skipped podman push due to error"
 fi
