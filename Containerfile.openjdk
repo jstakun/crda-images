@@ -6,11 +6,10 @@ RUN rpm -iv https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.r
 
 USER root
 
-
 RUN rpm -iv https://github.com/fabric8-analytics/cli-tools/releases/download/v0.2.5/crda_0.2.5_Linux-64bit.rpm && \
-    wget -O /tmp/mvn.tar.gz http://apache.mirror.anlx.net/maven/maven-3/3.8.5/binaries/apache-maven-3.8.5-bin.tar.gz && \
+    wget -O /tmp/mvn.tar.gz https://dlcdn.apache.org/maven/maven-3/3.8.6/binaries/apache-maven-3.8.6-bin.tar.gz && \
     tar -xvzf /tmp/mvn.tar.gz && rm -rf /tmp/mvn.tar.gz && mkdir /usr/local/maven && \
-    mv apache-maven-3.8.5/ /usr/local/maven/ && alternatives --install /usr/bin/mvn mvn /usr/local/maven/apache-maven-3.8.5/bin/mvn 1
+    mv apache-maven-3.8.6/ /usr/local/maven/ && alternatives --install /usr/bin/mvn mvn /usr/local/maven/apache-maven-3.8.6/bin/mvn 1
 
 ENV MAVEN_OPTS="-Xmx1024M -Xss128M -XX:MetaspaceSize=512M -XX:MaxMetaspaceSize=1024M -XX:+CMSClassUnloadingEnabled" \
     AUTH_TOKEN='' \ 
@@ -18,5 +17,5 @@ ENV MAVEN_OPTS="-Xmx1024M -Xss128M -XX:MetaspaceSize=512M -XX:MaxMetaspaceSize=1
     HOST='' \
     CONSENT_TELEMETRY='false'
 
-COPY ./scripts/python/crda.sh /
+COPY ./crda.sh /
 RUN chmod +x /crda.sh
