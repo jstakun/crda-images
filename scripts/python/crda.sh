@@ -60,13 +60,13 @@ else
   $output_file_path
 fi
 
-printf "\nReport is saved into file: $output_file_path"
-printf "\nTask is completed."
-
 if [ $exit_code == 1 ]
 then
   cat $output_file_path
 fi  
+
+printf "\nReport is saved into file: $output_file_path"
+printf "\nTask is completed."
 
 exit $exit_code 
 
