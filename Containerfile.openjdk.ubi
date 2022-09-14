@@ -1,8 +1,8 @@
-FROM registry.access.redhat.com/ubi8/ubi-minimal
+FROM registry.access.redhat.com/ubi8/ubi
 MAINTAINER Jaroslaw Stakun jstakun@redhat.com
 
 RUN rpm -iv https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
-    microdnf install -y java-11-openjdk wget jq tar gzip --nodocs --setopt install_weak_deps=0; microdnf clean all && rm -rf /mnt/rootfs/var/cache/
+    yum install -y java-11-openjdk wget jq --setopt install_weak_deps=false --nodocs; yum -y update; yum clean all && rm -rf /mnt/rootfs/var/cache/
 
 USER root
 
