@@ -1,0 +1,15 @@
+FROM registry.access.redhat.com/ubi8/ubi-minimal
+MAINTAINER Jaroslaw Stakun jstakun@redhat.com
+
+COPY ./crda.sh /
+
+RUN chmod +x /crda.sh && \
+    rpm -iv https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm && \
+    microdnf install -y npm jq --nodocs --setopt install_weak_deps=0; microdnf clean all && rm -rf /mnt/rootfs/var/cache/ && \
+    rpm -iv https://github.com/fabric8-analytics/cli-tools/releases/download/v0.2.5/crda_0.2.5_Linux-64bit.rpm
+
+ENV MAVEN_OPTS="-Xmx1024M -Xss128M -XX:MetaspaceSize=512M -XX:MaxMetaspaceSize=1024M -XX:+CMSClassUnloadingEnabled" \
+    AUTH_TOKEN='' \ 
+    CRDA_KEY='' \
+    HOST='' \
+    CONSENT_TELEMETRY='false'
