@@ -1,0 +1,16 @@
+FROM registry.access.redhat.com/ubi8/ubi
+ARG ECOSYSTEM_VERSION=python3.8
+MAINTAINER Jaroslaw Stakun jstakun@redhat.com
+
+COPY ./crda.sh /
+
+RUN chmod +x /crda.sh && \
+    yum install -y $ECOSYSTEM_VERSION jq; yum clean all && \
+    ln -s /usr/bin/python3 /usr/bin/python && \
+    rpm -i https://github.com/fabric8-analytics/cli-tools/releases/download/v0.2.5/crda_0.2.5_Linux-64bit.rpm
+
+ENV AUTH_TOKEN='' \
+    CRDA_KEY='' \
+    HOST='' \
+    CONSENT_TELEMETRY='false'
+
